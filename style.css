@@ -1,0 +1,9 @@
+.content-wrapper {
+  width: 120px;
+  height: 30px;
+  border: 1px solid #34e5eb;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
