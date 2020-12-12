@@ -66,8 +66,9 @@ const diffInHours = (start, end) => {
 // OT request helper
 let isActiveOTTab = false;
 const callback = () => {
-  const OTTab = document.querySelector('.modals .header .ui.positive:nth-child(5)');
-  if(!isActiveOTTab && OTTab) {
+  const OTTab = document.querySelector('.modals .header .ui:nth-child(5)');
+  if(OTTab && [...OTTab.classList].includes('positive') && !isActiveOTTab) {
+    isActiveOTTab = true
     isActiveOTTab = true;
     const currentDateString = document.querySelector('.content .form .fields .field:nth-child(1) input').value;
     const currentDate = new Date(currentDateString);
@@ -94,13 +95,26 @@ const callback = () => {
       hourInput.parentNode.style.display = 'flex';
       hourInput.parentNode.style.flexDirection = 'column';
     }
+    if (hours < 0 || hourInput.value) {
+      return
+    }
+    // Fill startime
+    const startInput = document.querySelector('.content .form .field:nth-child(1) input');
+    startInput.value = startInput.value.replace(/[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}$/, "18:00:00");
     hourInput.value = hours;
     hourInput.addEventListener('focus', () => {
+      if (hourInput.value) {
+        return;
+      }
       hourInput.value = hours;
     });
+    hourInput.focus();
     return;
   }
-  isActiveOTTab = false;
+
+  if(!OTTab || ![...OTTab.classList].includes('positive')) {
+    isActiveOTTab = false
+  }
 };
 
 const observer = new MutationObserver(callback);
