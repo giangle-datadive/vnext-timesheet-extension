@@ -8,6 +8,12 @@ const getCookies = function () {
   return cookies;
 };
 
+const changeValue = (element, value) => {
+  const event = new Event('input', { bubbles: true })
+  element.value = value
+  element.dispatchEvent(event)
+}
+
 const getCurrentDate = () => {
   const date = new Date();
   date.setMonth(date.getMonth() + 1);
@@ -99,16 +105,20 @@ const callback = () => {
       return
     }
     // Fill startime
-    const startInput = document.querySelector('.content .form .field:nth-child(1) input');
-    startInput.value = startInput.value.replace(/[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}$/, "18:00:00");
+    if(!isWeekend) {
+      const startInput = document.querySelector('.content .form .field:nth-child(1) input');
+      const startTime = startInput.value.replace(/[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}$/, "18:00:00");
+      changeValue(startInput, startTime);
+    }
+    
+    changeValue(hourInput, hours);
     hourInput.value = hours;
     hourInput.addEventListener('focus', () => {
       if (hourInput.value) {
         return;
       }
-      hourInput.value = hours;
+      changeValue(hourInput, hours);
     });
-    hourInput.focus();
     return;
   }
 
