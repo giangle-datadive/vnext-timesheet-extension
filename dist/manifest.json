@@ -1,6 +1,6 @@
 {
   "name": "Vnext timesheet",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Vnext timesheet",
   "icons": {
     "16": "images/vnext-16.png",
@@ -11,7 +11,7 @@
   "content_scripts": [
     {
       "matches": ["https://timesheet.vnext.vn/*"],
-      "js": ["exec.js"]
+      "js": ["main.js"]
     }
   ],
   "manifest_version": 2

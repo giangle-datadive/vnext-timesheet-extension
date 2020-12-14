@@ -1,3 +1,8 @@
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+import LateInAmount from './LateInAmount'
+
 const getCookies = function () {
   const pairs = document.cookie.split(";");
   const cookies = {};
@@ -37,25 +42,11 @@ const headers = {
   Authorization: `Bearer ${token}`,
 };
 
-fetch(
-  `https://api-erp.vnext.vn/tsm/timesheet/attendances/me?from=${getStartDate()}&to=${getCurrentDate()}&pageSize=9999`,
-  { headers }
-)
-  .then((res) => res.json())
-  .then((data) => {
-    const total = data.reduce((total, item) => total + +item.late_in_fine, 0);
-    const sidebar = document.querySelector(".four");
-    const div = document.createElement("div");
-    div.className = "ui segment";
-    div.innerHTML = `
-      <h5 class="ui header">Tiền đi muộn</h5>
-      <div role="list" style="color: red;font-size:18px;font-weight: bold;" class="ui divided relaxed list">${total.toLocaleString(
-        "en-US",
-        { maximumFractionDigits: 2 }
-      )}</div>
-    `;
-    sidebar.appendChild(div);
-  });
+const sidebar = document.querySelector(".four");
+const div = document.createElement("div");
+div.className = "ui segment";
+sidebar.appendChild(div);
+ReactDOM.render(<LateInAmount />, div);
 
 const diffInHours = (start, end) => {
   const startDate =  new Date();
